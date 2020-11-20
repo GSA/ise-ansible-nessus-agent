@@ -1,6 +1,6 @@
 ---
-- name: local test
-  hosts: 127.0.0.1
+- name: test
+  hosts: all
   connection: local
   become: yes
   become_user: root
