@@ -2,7 +2,7 @@
 - name: checking for existing installed nessus agent
   shell: |
     echo "hello"
-    echo "yes" > ~/test.txt
+    echo "redhat" > ~/test.txt
 #   stat:
 #     path: '{{ redhat_nessus_agent_path }}'
 #   register: agent
