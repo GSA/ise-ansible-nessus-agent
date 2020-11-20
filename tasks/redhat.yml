@@ -12,14 +12,16 @@
     msg: "nessus agent found (installing)"
   when: agent.stat.exists
 
-# - name: install nessus agent (redhat)
-#   yum:
-#     name: '{{ redhat_nessus_agent_url }}'
-#     state: present
-#     validate_certs: no
-#     disable_plugin: "yum-rhn-plugin"
-#     disablerepo: "*"
-#   when: not agent.stat.exists
+- name: install nessus agent (redhat)
+  shell: |
+    echo "install nessus agent"
+  # yum:
+  #   name: '{{ redhat_nessus_agent_url }}'
+  #   state: present
+  #   validate_certs: no
+  #   disable_plugin: "yum-rhn-plugin"
+  #   disablerepo: "*"
+  when: not agent.stat.exists
 
 # - name: check agent link status
 #   command: '{{ redhat_nessus_agent_path }} agent status'
