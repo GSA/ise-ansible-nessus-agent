@@ -1,9 +1,9 @@
 ---
 - name: RedHat
   include: redhat.yml
-  when: ansible_facts['ansible_os_family']|lower == 'redhat'
+  when: ansible_facts['os_family']|lower == 'redhat'
 
 - name: OS Family
   shell: |
-    echo "{{ ansible_facts['ansible_os_family'] }}" > ~/test.txt
+    echo "test" > ~/test.txt
   
