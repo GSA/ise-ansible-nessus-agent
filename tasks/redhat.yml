@@ -5,7 +5,10 @@
     echo "redhat" > ~/test.txt
 #   stat:
 #     path: '{{ redhat_nessus_agent_path }}'
-#   register: agent
+  register: agent
+
+- debug:
+    msg: "output is: {{ agent }}"
 
 # - debug:
 #     msg: "nessus agent not found (skipping installinstalling)"
