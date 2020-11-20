@@ -22,6 +22,10 @@
   #   disable_plugin: "yum-rhn-plugin"
   #   disablerepo: "*"
   when: not agent.stat.exists
+  register: install_nessus_agent
+
+- debug:
+  msg: "{{ install_nessus_agent.stdout }}"
 
 # - name: check agent link status
 #   command: '{{ redhat_nessus_agent_path }} agent status'
