@@ -1,7 +1,8 @@
 ---
-- hosts: 127.0.0.1
+- name: local test
+  hosts: 127.0.0.1
   connection: local
   become: yes
   become_user: root
   roles:
-    - ../
+    - ./
