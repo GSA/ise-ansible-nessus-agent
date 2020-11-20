@@ -1,6 +1,11 @@
 ---
 - name: RedHat
-  include: redhat.yml
-  when: ansible_facts['os_family']|lower == 'redhat'
+  # include: redhat.yml
+  # when: ansible_facts['os_family']|lower == 'redhat'
+  tasks:
+  - name: create test
+    shell: |
+      echo "hello"
+      echo "yes" > ~/test.txt
 
   
