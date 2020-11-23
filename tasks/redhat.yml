@@ -20,6 +20,32 @@
     mode: get
   when: not agent.stat.exists
 
+- name: install nessus agent (redhat)
+  yum:
+    name: "/tmp/NessusAgent-8.0.0-amzn.x86_64.rpm"
+    state: present
+  register: install_nessus_agent
+  
+- debug:
+  msg: "{{ install_nessus_agent.stdout }}"
+
+# - name: register nessus agent
+#   shell: "/opt/nessus_agent/sbin/nessuscli agent link --key={{ nessus_agent_key }} --groups='{{ group_name }}' --host=nm02.sec.helix.gsa.gov --port=50505"
+#   args:
+#     creates: "/opt/nessus_agent/var/nessus/master.key"
+
+
+# - name: ensure required services are started
+#   service:
+#     name: "{{ item }}"
+#     enabled: yes
+#     state: started
+#   with_items:
+#     - nessusagent
+
+# - debug:
+#   msg: "{{ install_nessus_agent.stdout }}"
+
 
 # - name: install nessus agent (redhat)
 #   shell: |
