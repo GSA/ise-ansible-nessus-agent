@@ -5,22 +5,33 @@
   register: agent
 
 - debug:
-    msg: "nessus agent not found (skipping installing)"
+    msg: "nessus agent not found"
   when: not agent.stat.exists
 
 - debug:
-    msg: "nessus agent found (installing)"
+    msg: "nessus agent found (skip installing)"
   when: agent.stat.exists
+
+- name: download nessus agent
+  shell: |
+    echo "download nessus agent installation artifacts from s3"
+  amazon.aws.aws_s3:
+    bucket: sectools-artifacts
+    object: /nessus-agent/NessusAgent-8.0.0-amzn.x86_64.rpm
+    dest: /tmp/NessusAgent-8.0.0-amzn.x86_64.rpm
+    mode: get
+  when: not agent.stat.exists
+
 
 # - name: install nessus agent (redhat)
 #   shell: |
 #     echo "install nessus agent"
-#   # yum:
-#   #   name: '{{ redhat_nessus_agent_url }}'
-#   #   state: present
-#   #   validate_certs: no
-#   #   disable_plugin: "yum-rhn-plugin"
-#   #   disablerepo: "*"
+#   yum:
+#     name: '{{ redhat_nessus_agent_url }}'
+#     state: present
+#     validate_certs: no
+#     disable_plugin: "yum-rhn-plugin"
+#     disablerepo: "*"
 #   when: not agent.stat.exists
 #   register: install_nessus_agent
 
