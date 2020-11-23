@@ -15,15 +15,15 @@
 #--- Install nessus agent
 - name: download nessus agent
   amazon.aws.aws_s3:
-    bucket: sectools-artifacts
-    object: /nessus-agent/NessusAgent-8.0.0-amzn.x86_64.rpm
-    dest: /tmp/NessusAgent-8.0.0-amzn.x86_64.rpm
+    bucket: "{{ redhat_nessus_agent_artifacts_s3_bucket }}"
+    object: "{{ redhat_nessus_agent_artifacts_s3_key }}"
+    dest: /tmp/nessus-agent-artifacts-redhat
     mode: get
   when: not agent.stat.exists
 
 - name: install nessus agent (redhat)
   yum:
-    name: "/tmp/NessusAgent-8.0.0-amzn.x86_64.rpm"
+    name: "/tmp/nessus-agent-artifacts-redhat"
     state: present
   register: install_nessus_agent
 
