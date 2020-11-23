@@ -48,10 +48,18 @@
   changed_when: '"[info] [agent] Linked to" not in nessus_agent_link.stdout'
   register: nessus_agent_link
 
+- debug:
+    msg: "nessus agent still linked"
+  when: '"[info] [agent] Linked to" in nessus_agent_link.stdout'
+
+- debug:
+    msg: "nessus agent NOT linked"
+  when: '"[info] [agent] Linked to" not in nessus_agent_link.stdout'
+
 - name: link nessus agent
   shell: "{{ redhat_nessuscli_bin_path }} agent link --key={{ nessus_agent_key }} --host={{ nessus_server_url }} --port={{ nessus_server_port }}"
-  when: not nessus_agent_link.stat.exists
+  when: nessus_agent_link is failed
 
 - debug:
     msg: "{{ nessus_agent_link.stdout }}"
-  when: not nessus_agent_link.stat.exists
+  when: nessus_agent_link is failed
