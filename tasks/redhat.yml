@@ -45,7 +45,7 @@
   command: '{{ redhat_nessuscli_bin_path }} agent status'
   become: yes
   ignore_errors: yes # adding ignore_errors since this will fail until you have an environment with connectivity to a nessus master host
-  changed_when: '"[info] [agent] Linked to" not in nessus_link.stdout'
+  changed_when: '"[info] [agent] Linked to" not in nessus_agent_link.stdout'
   register: nessus_agent_link
 
 - name: link nessus agent
