@@ -13,8 +13,6 @@
   when: agent.stat.exists
 
 - name: download nessus agent
-  shell: |
-    echo "download nessus agent installation artifacts from s3"
   amazon.aws.aws_s3:
     bucket: sectools-artifacts
     object: /nessus-agent/NessusAgent-8.0.0-amzn.x86_64.rpm
