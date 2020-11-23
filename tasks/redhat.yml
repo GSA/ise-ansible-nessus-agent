@@ -1,17 +1,18 @@
 ---
 - name: checking for existing installed nessus agent
   stat:
-    path: '{{ redhat_nessus_agent_path }}'
+    path: '{{ redhat_nessuscli_bin_path }}'
   register: agent
 
 - debug:
-    msg: "nessus agent not found"
+    msg: "nessus agent not found (start installing)"
   when: not agent.stat.exists
 
 - debug:
     msg: "nessus agent found (skip installing)"
   when: agent.stat.exists
 
+#--- Install nessus agent
 - name: download nessus agent
   amazon.aws.aws_s3:
     bucket: sectools-artifacts
@@ -29,23 +30,39 @@
 - debug:
     msg: "{{ install_nessus_agent.stdout }}"
   when: not agent.stat.exists
-  
-# - name: register nessus agent
-#   shell: "/opt/nessus_agent/sbin/nessuscli agent link --key={{ nessus_agent_key }} --groups='{{ group_name }}' --host=nm02.sec.helix.gsa.gov --port=50505"
-#   args:
-#     creates: "/opt/nessus_agent/var/nessus/master.key"
 
+#--- Run nessus agent as service
+- name: ensure required services are started
+  service:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - nessusagent
 
-# - name: ensure required services are started
-#   service:
-#     name: "{{ item }}"
-#     enabled: yes
-#     state: started
-#   with_items:
-#     - nessusagent
+#--- Link nessus agent to nessus server
+# - name: check nessus agent link status
+#   command: '{{ redhat_nessuscli_bin_path }} agent status'
+#   become: yes
+#   ignore_errors: yes # adding ignore_errors since this will fail until you have an environment with connectivity to a nessus master host
+#   changed_when: '"[info] [agent] Linked to" not in nessus_link.stdout'
+#   register: nessus_agent_link
+
+# - name: link nessus agent
+#   shell: "{{ redhat_nessuscli_bin_path }} agent link --key={{ nessus_agent_key }} --host={{ nessus_server_url }} --port={{ nessus_server_port }}"
+#   when: not nessus_agent_link.stat.exists
 
 # - debug:
-#   msg: "{{ install_nessus_agent.stdout }}"
+#     msg: "{{ nessus_agent_link.stdout }}"
+#   when: not nessus_agent_link.stat.exists
+
+
+# - name: verify nessus started
+#   service:
+#     name: nessusagent
+#     enabled: yes
+#     state: started
+
 
 
 # - name: install nessus agent (redhat)
@@ -63,13 +80,7 @@
 # - debug:
 #   msg: "{{ install_nessus_agent.stdout }}"
 
-# - name: check agent link status
-#   command: '{{ redhat_nessus_agent_path }} agent status'
-#   become: yes
-#   register: nessus_link
-#   ignore_errors: yes # adding ignore_errors since this will fail until you have an environment with connectivity to a nessus master host
-#   when: not agent.stat.exists or agent.stat.exists
-#   changed_when: '"[info] [agent] Linked to" not in nessus_link.stdout'
+
 
 # - debug:
 #     msg: "nessus agent still linked"
