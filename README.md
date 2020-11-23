@@ -1,2 +1,0 @@
-# ise-ansible-nessus-agent
-
