@@ -1,22 +1,16 @@
 ---
 - name: checking for existing installed nessus agent
-  shell: |
-    echo "hello"
-    echo "redhat" > ~/test.txt
-#   stat:
-#     path: '{{ redhat_nessus_agent_path }}'
+  stat:
+    path: '{{ redhat_nessus_agent_path }}'
   register: agent
 
 - debug:
-    msg: "output is: {{ agent }}"
+    msg: "nessus agent not found (skipping installing)"
+  when: not agent.stat.exists
 
-# - debug:
-#     msg: "nessus agent not found (skipping installinstalling)"
-#   when: not agent.stat.exists
-
-# - debug:
-#     msg: "nessus agent found (installing)"
-#   when: agent.stat.exists
+- debug:
+    msg: "nessus agent found (installing)"
+  when: agent.stat.exists
 
 # - name: install nessus agent (redhat)
 #   shell: |
