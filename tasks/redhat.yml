@@ -41,25 +41,35 @@
     - nessusagent
 
 #--- Link nessus agent to nessus server
-- name: check nessus agent link status
+
+- name: check nessus agent link status at begin
   command: '{{ redhat_nessuscli_bin_path }} agent status'
   become: yes
   ignore_errors: yes # adding ignore_errors since this will fail until you have an environment with connectivity to a nessus master host
-  changed_when: '"[info] [agent] Linked to" not in nessus_agent_link.stdout'
-  register: nessus_agent_link
+  register: nessus_agent_link_before
 
 - debug:
-    msg: "nessus agent still linked"
-  when: '"[info] [agent] Linked to" in nessus_agent_link.stdout'
+    msg: "At begin, nessus agent NOT linked"
+  when: '"Link status: Not linked to a manager" in nessus_agent_link_before.stdout'
 
 - debug:
-    msg: "nessus agent NOT linked"
-  when: '"[info] [agent] Linked to" not in nessus_agent_link.stdout'
+    msg: "At begin, nessus agent STILL linked"
+  when: '"Link status: Not linked to a manager" not in nessus_agent_link_before.stdout'
 
 - name: link nessus agent
   shell: "{{ redhat_nessuscli_bin_path }} agent link --key={{ nessus_agent_key }} --host={{ nessus_server_url }} --port={{ nessus_server_port }}"
-  when: nessus_agent_link is failed
+  when: '"Link status: Not linked to a manager" in nessus_agent_link_before.stdout'
+
+- name: check nessus agent link status at end
+  command: '{{ redhat_nessuscli_bin_path }} agent status'
+  become: yes
+  ignore_errors: yes # adding ignore_errors since this will fail until you have an environment with connectivity to a nessus master host
+  register: nessus_agent_link_after
 
 - debug:
-    msg: "{{ nessus_agent_link.stdout }}"
-  when: nessus_agent_link is failed
+    msg: "At the end, nessus agent NOT linked"
+  when: '"Link status: Not linked to a manager" in nessus_agent_link_after.stdout'
+
+- debug:
+    msg: "At the end, nessus agent STILL linked"
+  when: '"Link status: Not linked to a manager" not in nessus_agent_link_after.stdout'
