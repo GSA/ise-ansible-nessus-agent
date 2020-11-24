@@ -26,6 +26,7 @@
     name: "/tmp/nessus-agent-artifacts-redhat"
     state: present
   register: install_nessus_agent
+  when: not agent.stat.exists
 
 - debug:
     msg: "{{ install_nessus_agent.stdout }}"
