@@ -28,9 +28,6 @@
   register: install_nessus_agent
   when: not agent.stat.exists
 
-- debug:
-    msg: "{{ install_nessus_agent.stdout }}"
-  when: not agent.stat.exists
 
 #--- Run nessus agent as service
 - name: ensure required services are started
