@@ -3,4 +3,8 @@
   include_tasks: redhat.yml
   when: ansible_facts['os_family']|lower == 'redhat'
 
+- name: Ubuntu and debian
+  include_tasks: ubuntu.yml
+  when: ansible_facts['os_family']|lower == 'debian'
+
   

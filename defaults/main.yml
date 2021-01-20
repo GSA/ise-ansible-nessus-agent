@@ -6,9 +6,9 @@ nessus_agent_key: ""
 nessus_server_url: ""
 nessus_server_port: 50505 # default nessus server port number
 
-# redhat
-redhat_nessuscli_bin_path: "/opt/nessus_agent/sbin/nessuscli" # default redhat install directory
-redhat_nessus_agent_artifacts_s3_bucket: ""
-redhat_nessus_agent_artifacts_s3_key: ""
+# Paths and buckets
+nessuscli_bin_path: "/opt/nessus_agent/sbin/nessuscli" # default install directory
+nessus_agent_artifacts_s3_bucket: ""
+nessus_agent_artifacts_s3_key: ""
 
 # windows TODO
