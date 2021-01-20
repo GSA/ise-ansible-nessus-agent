@@ -13,6 +13,13 @@
   when: agent.stat.exists
 
 #--- Install nessus agent
+
+- name: Ensure botocore and boto3 modules are installed
+  pip:
+    name:         [ "boto3", "botocore"]
+    extra_args:   "--user"
+  when: nessus_agent_artifacts_s3_bucket != ""
+
 - name: download nessus agent
   aws_s3:
     bucket: "{{ nessus_agent_artifacts_s3_bucket }}"
