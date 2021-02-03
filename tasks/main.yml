@@ -7,4 +7,7 @@
   include_tasks: ubuntu.yml
   when: ansible_facts['os_family']|lower == 'debian'
 
+- name: Windows Server and Workstation
+  include_tasks: win.yml
+  when: ansible_facts['os_family']|lower == 'Windows'
   
