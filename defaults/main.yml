@@ -8,6 +8,7 @@ nessus_server_port: 50505 # default nessus server port number
 
 # Paths and buckets
 nessuscli_bin_path: "/opt/nessus_agent/sbin/nessuscli" # default install directory
+nessuscli_exe_path: C:\Program Files\Tenable\Nessus Agent\nessuscli.exe
 nessus_agent_artifacts_s3_bucket: ""
 nessus_agent_artifacts_s3_key: ""
 

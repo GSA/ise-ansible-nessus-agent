@@ -9,5 +9,5 @@
 
 - name: Windows Server and Workstation
   include_tasks: win.yml
-  when: ansible_facts['os_family']|lower == 'Windows'
+  when: ansible_facts['os_family']|lower == 'windows'
   
