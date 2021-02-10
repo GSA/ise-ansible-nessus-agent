@@ -1,37 +1,5 @@
-- name: Create Stage Folder
-  win_file:
-    path: C:\Temp
-    state: directory
-
-- name: Install python3
-  win_chocolatey:
-    name: "{{ item  }}"
-    state: present
-  with_items:
-  - python3
-  - awscli
-
-- name: Install boto3
-  win_command: pip3.exe install boto boto3 botocore
-
-- name: install aws tools
-  win_package:
-    path: http://sdk-for-net.amazonwebservices.com/latest/AWSToolsAndSDKForNet.msi
-    state: present
-    product_id: '{186A6440-3AD4-4E0E-ACC2-C098CA589290}'
-    creates_path: 'C:\Program Files\Amazon\Ec2ConfigService'
-
 - name: Download Nessus Agent from S3
   win_command: "PowerShell.exe -Command Read-S3Object -BucketName {{ nessus_agent_artifacts_s3_bucket }} -Key {{ nessus_agent_artifacts_s3_key }} -File c:\\Temp\\NessusAgent.msi "
-
-- name: download nessus agent
-  aws_s3:
-    bucket: gsa-sectools-artifacts-sandbox
-    object: /win/NessusAgent-8.0.0-x64.msi
-    dest: c:\Temp\NessusAgent.msi
-    mode: get
-  tags:
-  - never
 
 - name: Install an Nessus agent
   win_package:
@@ -41,7 +9,7 @@
 - name: Link Agent
   win_command: '"{{ nessuscli_exe_path }}" agent link --key={{nessus_agent_key}} --host={{nessus_server_url}} --port={{nessus_server_port}}'
 
-- name: Remove the nessus link
-  win_regedit:
-    path: HKLM:\Software\Tenable\TAG
-    state: absent
+# - name: Remove the nessus link
+#   win_regedit:
+#     path: HKLM:\Software\Tenable\TAG
+#     state: absent
