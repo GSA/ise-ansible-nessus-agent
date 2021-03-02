@@ -1,4 +1,11 @@
 ---
+
+# Create Staging Folder
+- name: Create Staging Folder
+  file:
+    path: /build-artifacts/
+    state: directory
+
 - name: checking for existing installed nessus agent
   stat:
     path: '{{ nessuscli_bin_path }}'
@@ -24,13 +31,13 @@
   aws_s3:
     bucket: "{{ nessus_agent_artifacts_s3_bucket }}"
     object: "{{ nessus_agent_artifacts_s3_key }}"
-    dest: /tmp/nessus-agent.deb
+    dest: /build-artifacts/nessus-agent.deb
     mode: get
   when: not agent.stat.exists
 
 - name: install nessus agent
   apt:
-    deb: /tmp/nessus-agent.deb 
+    deb: /build-artifacts/nessus-agent.deb 
     state: present
   register: install_nessus_agent
   when: not agent.stat.exists
