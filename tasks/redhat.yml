@@ -19,21 +19,6 @@
     msg: "nessus agent found (skip installing)"
   when: agent.stat.exists
 
-- shell: pip list
-  register: pip_list
-
-- name: Ensure boto3 module is installed
-  pip:
-    name: "boto3"
-    extra_args: "--user"
-  when: '"boto3" is not in pip_list.stdout'
-
-- name: Ensure botocore module is installed
-  pip:
-    name: "botocore"
-    extra_args: "--user"
-  when: '"botocore" is not in pip_list.stdout'
-
 - name: download nessus agent
   aws_s3:
     bucket: "{{ nessus_agent_artifacts_s3_bucket }}"
