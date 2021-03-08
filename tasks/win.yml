@@ -6,8 +6,8 @@
     path: c:\Temp\NessusAgent.msi
     arguments: NESSUS_SERVER="{{nessus_server_url}}:{{nessus_server_port}}" NESSUS_KEY={{nessus_agent_key}} /qn
 
-- name: Link Agent
-  win_command: '"{{ nessuscli_exe_path }}" agent link --key={{nessus_agent_key}} --host={{nessus_server_url}} --port={{nessus_server_port}}'
+# - name: Link Agent
+#   win_command: '"{{ nessuscli_exe_path }}" agent link --key={{nessus_agent_key}} --host={{nessus_server_url}} --port={{nessus_server_port}}'
 
 # - name: Remove the nessus link
 #   win_regedit:
