@@ -19,21 +19,18 @@
     msg: "nessus agent found (skip installing)"
   when: agent.stat.exists
 
-- name: download nessus agent
-  aws_s3:
-    bucket: "{{ nessus_agent_artifacts_s3_bucket }}"
-    object: "{{ nessus_agent_artifacts_s3_key }}"
-    dest: /build-artifacts/nessus-agent.rpm
-    mode: get
+- name: Copy installer files to remote server
+  copy:
+    src: "{{ role_path }}/files/{{ nessus_package }}"
+    dest: "/build-artifacts/{{ nessus_package }}"
   when: not agent.stat.exists
 
 - name: install nessus agent
   yum:
-    name: /build-artifacts/nessus-agent.rpm 
+    name: "/build-artifacts/{{ nessus_package }}" 
     state: present
   register: install_nessus_agent
   when: not agent.stat.exists
-
 
 #--- Run nessus agent as service
 - name: ensure required services are started
