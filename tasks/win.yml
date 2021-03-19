@@ -1,15 +1,15 @@
-- name: Download Nessus Agent from S3
-  win_command: "PowerShell.exe -Command Read-S3Object -BucketName {{ nessus_agent_artifacts_s3_bucket }} -Key {{ nessus_agent_artifacts_s3_key }} -File c:\\Temp\\NessusAgent.msi "
+- name: Create Staging Folder
+  win_file:
+    path: C:\build-artifacts
+    state: directory
+
+- name: Copy installer files to remote server
+  win_copy:
+    src: "{{ role_path }}/files/{{ nessus_package }}"
+    dest: "C:\\build-artifacts\\{{ nessus_package }}"
 
 - name: Install an Nessus agent
   win_package:
-    path: c:\Temp\NessusAgent.msi
+    path: "C:\\build-artifacts\\{{ nessus_package }}"
     arguments: NESSUS_SERVER="{{nessus_server_url}}:{{nessus_server_port}}" NESSUS_KEY={{nessus_agent_key}} /qn
 
-# - name: Link Agent
-#   win_command: '"{{ nessuscli_exe_path }}" agent link --key={{nessus_agent_key}} --host={{nessus_server_url}} --port={{nessus_server_port}}'
-
-# - name: Remove the nessus link
-#   win_regedit:
-#     path: HKLM:\Software\Tenable\TAG
-#     state: absent
