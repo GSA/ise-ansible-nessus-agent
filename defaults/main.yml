@@ -4,10 +4,18 @@
 # universal
 nessus_agent_key: ""
 nessus_server_url: ""
-nessus_server_port: 50505 # default nessus server port number
+nessus_server_port: 
 
 # Paths and buckets
 nessuscli_bin_path: "/opt/nessus_agent/sbin/nessuscli" # default install directory
-nessuscli_exe_path: C:\Program Files\Tenable\Nessus Agent\nessuscli.exe
-nessus_package: NessusAgent-8.0.0-amzn.x86_64.rpm 
-# windows TODO
+nessus_installer_file: 
+  win: nessus-agent.msi
+  rpm: nessus-agent.rpm
+  deb: nessus-agent.deb
+
+#Set this to true when this role is used to build AMI  
+ami_build_flag: False
+secret_text:
+access_key:
+secret_key:
+session_token:
