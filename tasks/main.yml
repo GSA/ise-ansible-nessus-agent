@@ -1,5 +1,10 @@
 ---
 
+- set_fact:
+    nessus_server_url: "{{ secret_text | json_query('nessus_server_url') }}"
+    nessus_server_port: "{{ secret_text | json_query('nessus_server_port') }}"
+    nessus_agent_key: "{{ secret_text | json_query('nessus_agent_key') }}"
+
 - name: RedHat
   set_fact:
     package_folder: rpm/rhel
