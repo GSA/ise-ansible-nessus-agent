@@ -13,7 +13,7 @@
 
 - name: Amazon
   set_fact:
-    package_type: rpm
+    package_type: amz
     package_folder: rpm/amazon
   when: ansible_facts['distribution']|lower == 'amazon' 
 
