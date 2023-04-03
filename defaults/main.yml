@@ -11,6 +11,7 @@ nessuscli_bin_path: "/opt/nessus_agent/sbin/nessuscli" # default install directo
 nessus_installer_file: 
   win: nessus-agent.msi
   rpm: nessus-agent-es{{ ansible_distribution_major_version }}.rpm
+  amz: nessus-agent.rpm
   deb: nessus-agent.deb
 
 #Set this to true when this role is used to build AMI  
