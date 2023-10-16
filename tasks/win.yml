@@ -5,10 +5,10 @@
 
 - name: Copy installer files to remote server
   win_copy:
-    src: "{{ role_path }}/files/{{ nessus_installer_file[package_type] }}.msi"
-    dest: "C:\\build-artifacts\\{{ nessus_installer_file[package_type] }}.msi"
+    src: "{{ role_path }}/files/{{ nessus_installer_file[package_type] }}"
+    dest: "C:\\build-artifacts\\{{ nessus_installer_file[package_type] }}"
 
 - name: Install an Nessus agent
   win_package:
-    path: "C:\\build-artifacts\\{{ nessus_installer_file[package_type] }}.msi"
+    path: "C:\\build-artifacts\\{{ nessus_installer_file[package_type] }}"
     arguments: NESSUS_SERVER="{{nessus_server_url}}:{{nessus_server_port}}" NESSUS_KEY={{nessus_agent_key}} /qn
