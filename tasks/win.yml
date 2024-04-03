@@ -15,5 +15,7 @@
 
 - name: Disable core updatey
   win_shell: |
-    Set-Location -Path "C:\Program Files\Tenable\Nessus Agent"
-   .\nessuscli.exe fix --set disable_core_updates=yes
+    cd "C:\\Program Files\\Tenable\\Nessus Agent"
+    .\\nessuscli.exe fix --set disable_core_updates=yes
+  args:
+    executable: cmd
