@@ -14,5 +14,6 @@
     arguments: NESSUS_SERVER="{{nessus_server_url}}:{{nessus_server_port}}" NESSUS_KEY={{nessus_agent_key}} /qn
 
 - name: Disable core updatey
-  win_command: >
-   path: "C:\Program Files\Tenable\Nessus Agent\nessuscli fix --set disable_core_updates=yes" 
+  win_shell: |
+    Set-Location -Path "C:\Program Files\Tenable\Nessus Agent"
+   .\nessuscli.exe fix --set disable_core_updates=yes
