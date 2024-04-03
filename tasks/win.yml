@@ -12,3 +12,7 @@
   win_package:
     path: "C:\\build-artifacts\\{{ nessus_installer_file[package_type] }}"
     arguments: NESSUS_SERVER="{{nessus_server_url}}:{{nessus_server_port}}" NESSUS_KEY={{nessus_agent_key}} /qn
+
+- name: Disable core updatey
+  win_command: >
+   C:\Program Files\Tenable\Nessus Agent\nessuscli fix --set disable_core_updates=yes 
