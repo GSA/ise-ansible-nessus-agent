@@ -15,4 +15,4 @@
 
 - name: Disable core updatey
   win_command: >
-   C:\Program Files\Tenable\Nessus Agent\nessuscli fix --set disable_core_updates=yes 
+   path: "C:\Program Files\Tenable\Nessus Agent\nessuscli fix --set disable_core_updates=yes" 
