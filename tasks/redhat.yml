@@ -26,11 +26,7 @@
   when: not agent.stat.exists
 
 - name: install nessus agent
-  yum:
-    name: "/build-artifacts/{{ nessus_installer_file[package_type] }}" 
-    state: present
-    disable_gpg_check: yes
-  register: install_nessus_agent
+  command: yum install --nogpgcheck -y "/build-artifacts/{{ nessus_installer_file[package_type] }}"
   when: not agent.stat.exists
 
 #--- Run nessus agent as service
